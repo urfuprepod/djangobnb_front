@@ -1,0 +1,1 @@
+export const customButtonClass = `py-4 px-3 bg-airbnb hover:bg-airbnb-dark text-center text-white rounded-xl transition cursor-pointer`

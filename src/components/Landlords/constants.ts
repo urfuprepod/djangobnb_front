@@ -1,0 +1,1 @@
+export const LandlordProfileClass = "items-center p-6 rounded-xl border border-gray-3 shadow-xl"

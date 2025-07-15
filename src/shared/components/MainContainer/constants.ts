@@ -1,0 +1,1 @@
+export const maxWidthClass = `max-w[1500px] mx-auto px-6`;

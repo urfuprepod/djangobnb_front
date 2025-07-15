@@ -1,0 +1,1 @@
+export const NavHeightClass = `h-[48px] lg:h-[64px]`

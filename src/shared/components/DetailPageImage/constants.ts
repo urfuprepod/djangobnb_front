@@ -1,0 +1,1 @@
+export const detailPageImageClass = `hover:scale-110 object-cover transition h-full w-full`
