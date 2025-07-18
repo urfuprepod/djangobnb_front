@@ -1,7 +1,4 @@
 import { useLoginModal } from "./useLoginModal";
-import { useSignUpModal } from "./useSignUpModal";
+import { useUserData } from "./useUserData";
 
-export {
-    useLoginModal,
-    useSignUpModal
-}
+export { useLoginModal, useUserData };

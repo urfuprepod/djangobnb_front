@@ -1,14 +1,82 @@
 "use client";
 
 import { CircleUserRound, Logs } from "lucide-react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import MenuLink from "./MenuLink";
-import { useLoginModal, useSignUpModal } from "@/processes/store/hooks";
+import { useLoginModal, useUserData } from "@/processes/store/hooks";
+import { menuLinkContainerClass } from "./constants";
+import { useRouter } from "next/navigation";
+import { resetAuthCookies } from "@/processes/lib/actions";
 
 const UserNav = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { open } = useLoginModal();
-    const { open: openSignUp } = useSignUpModal();
+    const { open, updateModalConfig } = useLoginModal();
+    const router = useRouter();
+    const { userId, resetId } = useUserData();
+
+    const menuLinkConfig = useMemo(() => {
+        return [
+            {
+                title: "Log In",
+                showed: !userId,
+                callback: () => {
+                    updateModalConfig(
+                        [
+                            {
+                                type: "email",
+                                name: "email",
+                                placeholder: "Your email address",
+                            },
+                            {
+                                type: "password",
+                                name: "password",
+                                placeholder: "Your password",
+                            },
+                        ],
+                        "Login"
+                    );
+                    open();
+                },
+            },
+            {
+                title: "Sign up",
+                showed: !userId,
+                callback: () => {
+                    updateModalConfig(
+                        [
+                            {
+                                type: "email",
+                                name: "email",
+                                placeholder: "Your email address",
+                            },
+                            {
+                                type: "password",
+                                name: "password1",
+                                placeholder: "Your password",
+                            },
+                            {
+                                type: "password",
+                                name: "password2",
+                                placeholder: "Repeat password",
+                            },
+                        ],
+                        "Sign up"
+                    );
+                    open();
+                },
+            },
+            {
+                title: "Logout",
+                showed: !!userId,
+                callback: () => {
+                    resetAuthCookies().then(() => {
+                        resetId();
+                        router.push("/");
+                    });
+                },
+            },
+        ];
+    }, [open, updateModalConfig, resetId, userId]);
 
     return (
         <div className="p-3 relative inline-block border rounded-full">
@@ -22,9 +90,20 @@ const UserNav = () => {
             </button>
 
             {isOpen && (
-                <div className="w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer">
-                    <MenuLink onClick={open}>Log in</MenuLink>
-                    <MenuLink onClick={openSignUp}>Sign up</MenuLink>
+                <div className={menuLinkContainerClass}>
+                    {menuLinkConfig
+                        .filter((el) => el.showed)
+                        .map((link, id) => (
+                            <MenuLink
+                                key={id}
+                                onClick={() => {
+                                    link.callback();
+                                    setIsOpen(false);
+                                }}
+                            >
+                                {link.title}
+                            </MenuLink>
+                        ))}
                 </div>
             )}
         </div>

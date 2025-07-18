@@ -1,3 +1,5 @@
+'use client'
+
 import { getProperties } from "@/entities/Properties/api";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
@@ -16,7 +18,7 @@ const PropertiesList = () => {
                 <PropertyListItem
                     name={el.title}
                     price={el.pricePerNight}
-                    imageUrl={el.image_url}
+                    imageUrl={el.imageUrl}
                     key={el.id}
                 />
             ))}

@@ -1,8 +1,14 @@
+import { useAddPropertyModal } from "@/processes/store/hooks/usePropertyModal";
 import React from "react";
 
 const AddPropertyButton = () => {
+    const { open } = useAddPropertyModal();
+
     return (
-        <div className="p-3 cursor-pointer text-sm font-semibold rounded-full hover:bg-gray-2">
+        <div
+            onClick={() => open()}
+            className="p-3 cursor-pointer text-sm font-semibold rounded-full hover:bg-gray-200"
+        >
             Djangobnb your home
         </div>
     );

@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface SignUpModalStore {
+interface AddPropertyStore {
     isOpen: boolean;
     open: () => void;
     close: () => void;
 }
 
-export const useSignUpModal = create<SignUpModalStore>((set) => {
+export const useAddPropertyModal = create<AddPropertyStore>((set) => {
     return {
         isOpen: false,
         open() {

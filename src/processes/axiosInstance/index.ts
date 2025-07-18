@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
 
-export const urlApi = `localhost:8000` + "/api";
+export const urlApi = `http://localhost:8000` + "/api";
 
 type ErrorWithMessage = {
     response: {
@@ -23,15 +23,14 @@ const errorHandler = (error: unknown) => {
     return Promise.reject(error);
 };
 
-const isNotLocalhost = location.hostname !== "localhost";
-
 export const BaseInstanse = axios.create({
     withCredentials: true,
     baseURL: `${urlApi}`,
     headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
+        // "Cache-Control": "no-cache, no-store, must-revalidate",
         Pragma: "no-cache",
-        Expires: "0",
+        Accept: "application/json"
+        // Expires: "0",
     },
 });
 

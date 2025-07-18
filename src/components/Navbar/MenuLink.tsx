@@ -1,15 +1,20 @@
-import React, { FC, PropsWithChildren } from 'react'
+import React, { FC, PropsWithChildren } from "react";
 
 type Props = {
-    onClick?: () => void
-}
+    onClick?: () => void;
+};
 
-const MenuLink: FC<PropsWithChildren<Props>> = ({children, onClick}) => {
-  return (
-    <div onClick={() => {onClick?.()}} className='px-5 py-4 cursor-ponter hover:bg-gray-100 transition'>
-      {children}
-    </div>
-  )
-}
+const MenuLink: FC<PropsWithChildren<Props>> = ({ children, onClick }) => {
+    return (
+        <div
+            onClick={() => {
+                onClick?.();
+            }}
+            className="px-5 py-4 cursor-ponter  rounded-xl hover:bg-gray-100 transition"
+        >
+            {children}
+        </div>
+    );
+};
 
-export default MenuLink
+export default MenuLink;

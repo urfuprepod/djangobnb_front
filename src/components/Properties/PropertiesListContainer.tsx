@@ -1,26 +1,28 @@
-import { getProperties } from '@/entities/Properties/api';
-import ReactQueryProvider from '@/processes/tanstack/ReactQueryProvider';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import React from 'react'
-import PropertiesList from './PropertiesList';
-
-
+import { getProperties } from "@/entities/Properties/api";
+import ReactQueryProvider from "@/processes/tanstack/ReactQueryProvider";
+import {
+    dehydrate,
+    HydrationBoundary,
+    QueryClient,
+} from "@tanstack/react-query";
+import React from "react";
+import PropertiesList from "./PropertiesList";
 
 const PropertiesListContainer = async () => {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ['properties'],
-        queryFn: getProperties
-    })
-  
-    return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-        <ReactQueryProvider>
-            <PropertiesList />
-        </ReactQueryProvider>
-    </HydrationBoundary>
-  )
-}
+        queryKey: ["properties"],
+        queryFn: getProperties,
+    });
 
-export default PropertiesListContainer
+    return (
+        <ReactQueryProvider>
+            <HydrationBoundary state={dehydrate(queryClient)}>
+                <PropertiesList />
+            </HydrationBoundary>
+        </ReactQueryProvider>
+    );
+};
+
+export default PropertiesListContainer;
