@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
-
+import { useUserData } from "../store/hooks";
+import { cookies } from "next/headers";
 export const urlApi = `http://localhost:8000` + "/api";
 
 type ErrorWithMessage = {
@@ -34,14 +35,6 @@ export const BaseInstanse = axios.create({
     },
 });
 
-// export const RestInstanse = axios.create({
-//     withCredentials: true,
-//     baseURL: `${urlApi}/rest`,
-//     // headers : { "Authorization" : "BasicCustom", }
-//     // headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin": "*",
-//     // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", }
-// });
-
 BaseInstanse.interceptors.response.use(
     (response) => {
         return response;
@@ -52,3 +45,15 @@ BaseInstanse.interceptors.response.use(
         const originalRequest = error.config;
     }
 );
+
+BaseInstanse.interceptors.request.use((config) => {
+//    const accessToken = Cookies.get('accessToken'); // Или парсинг из document.cookie
+  
+//   if (accessToken) {
+//     config.headers.Authorization = `Bearer ${accessToken}`;
+//   }
+
+cookies().then(() => console.log('член'))
+  
+  return config;
+});

@@ -1,9 +1,14 @@
+"use client";
+
+import { useUserData } from "@/processes/store/hooks";
 import { useAddPropertyModal } from "@/processes/store/hooks/usePropertyModal";
 import React from "react";
 
 const AddPropertyButton = () => {
     const { open } = useAddPropertyModal();
+    const { userId } = useUserData();
 
+    if (!userId) return null;
     return (
         <div
             onClick={() => open()}

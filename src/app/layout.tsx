@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Modal from "@/shared/components/Modals/Modal";
 import SignUpModal from "@/shared/components/Modals/AuthModal";
+import ReactQueryProvider from "@/processes/tanstack/ReactQueryProvider";
+import AddProeprtyModal from "@/shared/components/Modals/AddProeprtyModal";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,9 +33,12 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Navbar />
-                <div className="pt-32">{children}</div>
+                <ReactQueryProvider>
+                    <div className="pt-32">{children}</div>
 
-                <SignUpModal />
+                    <SignUpModal />
+                    <AddProeprtyModal />
+                </ReactQueryProvider>
             </body>
         </html>
     );

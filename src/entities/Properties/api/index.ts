@@ -11,3 +11,11 @@ export const getProperties = async () => {
         return null;
     }
 };
+
+export const createProperty = async (formData: FormData) => {
+    try {
+        const response = await BaseInstanse.post("properties/create/", formData);
+    } catch (e) {
+        return null;
+    }
+};
