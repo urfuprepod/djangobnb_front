@@ -1,5 +1,6 @@
 "use server";
 
+import { EnumTokens } from "@/shared/types";
 import { cookies } from "next/headers";
 
 export async function handleLogin(
@@ -33,6 +34,6 @@ export async function handleLogin(
 export async function resetAuthCookies() {
     const cooks = await cookies();
     cooks.set("session_userid", "");
-    cooks.set("session_access_token", "");
-    cooks.set("session_refresh_token", "");
+    cooks.set(EnumTokens.ACCESS_TOKEN, "");
+    cooks.set(EnumTokens.REFRESH_TOKEN, "");
 }

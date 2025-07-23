@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { getProperties } from "@/entities/Properties/api";
 import { useQuery } from "@tanstack/react-query";
@@ -15,12 +15,7 @@ const PropertiesList = () => {
     return (
         <>
             {data?.map((el) => (
-                <PropertyListItem
-                    name={el.title}
-                    price={el.pricePerNight}
-                    imageUrl={el.imageUrl}
-                    key={el.id}
-                />
+                <PropertyListItem property={el} key={el.id} />
             ))}
         </>
     );

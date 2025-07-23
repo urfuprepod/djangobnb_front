@@ -1,33 +1,44 @@
-import React from "react";
+import React, { FC } from "react";
 import Image from "next/image";
+import { IProperty } from "@/entities/Properties/types";
 
-const PropertyPageInfo = () => {
+type Props = {
+    property: IProperty;
+};
+
+const PropertyPageInfo: FC<Props> = (props) => {
+    const {
+        property: { title, bathrooms, bedrooms, guests, description, landlord },
+    } = props;
+
     return (
         <div className="py-6 pr-6 col-span-3">
-            <h1 className="mb-4 text-4xl">Property name</h1>
+            <h1 className="mb-4 text-4xl">{title}</h1>
             <span className="mb-6 block text-lg text-gray-600">
-                Guests: 4 - 2 bedrooms - 1 bathroom
+                Guests: {guests} - bedrooms: {bedrooms} - bathrooms: {bathrooms}
             </span>
 
             <hr />
 
             <div className="py-6 flex items-center space-x-4">
-                <Image
-                    src={"/"}
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                    alt="the user name"
-                />
+                {landlord.avatar_url && (
+                    <Image
+                        src={`${landlord.avatar_url}`}
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                        alt="the user name"
+                    />
+                )}
 
                 <p>
-                    <strong>John Doe</strong> is your host
+                    <strong>{landlord.name}</strong> is your host
                 </p>
             </div>
 
             <hr />
             <p className="mt-6 text-lg" id="description">
-                ddddddd
+                {description}
             </p>
         </div>
     );

@@ -1,9 +1,13 @@
 import PropertyPageInfo from "@/components/Properties/PropertyPageInfo";
+import ReservationSidebar from "@/components/Properties/ReservationSidebar";
+import { getDetailPropery } from "@/entities/Properties/api";
 import { MainContainer } from "@/shared/components";
 import Image from "next/image";
 import React from "react";
 
-const PropertyPage = () => {
+const PropertyPage = async ({ params }: { params: { id: string } }) => {
+    const property = await getDetailPropery(params.id);
+
     return (
         <MainContainer className="pb-6">
             <div className="w-full h-[64vh] mb-4 overflow-hidden rounded-xl relative">
@@ -16,9 +20,9 @@ const PropertyPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                <PropertyPageInfo />
+                <PropertyPageInfo property={property} />
 
-                <div className="">right</div>
+                <ReservationSidebar property={property} />
             </div>
         </MainContainer>
     );

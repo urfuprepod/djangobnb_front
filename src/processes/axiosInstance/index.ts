@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
 import { useUserData } from "../store/hooks";
-import { cookies } from "next/headers";
+import { getAccessToken, removeFromStorage } from "@/shared/methods";
 export const urlApi = `http://localhost:8000` + "/api";
 
 type ErrorWithMessage = {
@@ -28,10 +28,10 @@ export const BaseInstanse = axios.create({
     withCredentials: true,
     baseURL: `${urlApi}`,
     headers: {
-        // "Cache-Control": "no-cache, no-store, must-revalidate",
+       
         Pragma: "no-cache",
-        Accept: "application/json"
-        // Expires: "0",
+        Accept: "application/json",
+        
     },
 });
 
@@ -47,13 +47,25 @@ BaseInstanse.interceptors.response.use(
 );
 
 BaseInstanse.interceptors.request.use((config) => {
-//    const accessToken = Cookies.get('accessToken'); // Или парсинг из document.cookie
-  
-//   if (accessToken) {
-//     config.headers.Authorization = `Bearer ${accessToken}`;
-//   }
+    const accessToken = getAccessToken();
 
-cookies().then(() => console.log('член'))
-  
-  return config;
+    // console.log(useUserData?.())
+    if (config?.headers && accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`
+    }
+
+    return config;
 });
+
+BaseInstanse.interceptors.response.use(config => config, async error => {
+    const originalRequest = error.config;
+
+    if (error?.response?.status === 401 && error.config && !error.config._isRetry) {
+        originalRequest._isRetry = true;
+        try {
+            return BaseInstanse.request(originalRequest)
+        } catch (error) {
+            removeFromStorage();
+        }
+    }
+})

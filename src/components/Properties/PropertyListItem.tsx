@@ -1,18 +1,27 @@
+"use client";
+
 import React, { FC } from "react";
 import { propertyListItemClass } from "./constants";
 import { DetailPageImage } from "@/shared/components";
+import { useRouter } from "next/navigation";
+import { IProperty } from "@/entities/Properties/types";
 
 type Props = {
-    name: string;
-    price: number;
-    imageUrl: string;
+    property: IProperty;
 };
 
 const PropertyListItem: FC<Props> = (props) => {
-    const { name, price, imageUrl } = props;
+    const {
+        property: { id, title: name, imageUrl, pricePerNight: price },
+    } = props;
+
+    const router = useRouter();
 
     return (
-        <div className="cursor-pointer">
+        <div
+            onClick={() => router.push(`/properties/${id}`)}
+            className="cursor-pointer"
+        >
             <div className={propertyListItemClass}>
                 <DetailPageImage
                     src={imageUrl}

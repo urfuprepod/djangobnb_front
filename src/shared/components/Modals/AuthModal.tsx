@@ -6,6 +6,7 @@ import { CustomButton, CustomInput } from "../Forms";
 import { useRouter } from "next/navigation";
 import { authorize } from "@/entities/User/api";
 import { useLoginModal, useUserData } from "@/processes/store/hooks";
+import ErrorMessage from "../ErrorMessage";
 
 const AuthModal = () => {
     const router = useRouter();
@@ -63,11 +64,7 @@ const AuthModal = () => {
                     />
                 ))}
 
-                {error && (
-                    <div className="p-5 bg-airbnb text-white rounded-xl opacity-80">
-                        {error}
-                    </div>
-                )}
+                {error && <ErrorMessage>{error}</ErrorMessage>}
 
                 <CustomButton type="submit">{type}</CustomButton>
             </form>

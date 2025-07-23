@@ -7,6 +7,11 @@ export interface ICategory {
 }
 
 export type SelectCountryType = {
-    label: string
-    value: string
+    label: string;
+    value: string;
+};
+
+export enum EnumTokens {
+    ACCESS_TOKEN = "session_access_token",
+    REFRESH_TOKEN = "session_refresh_token",
 }

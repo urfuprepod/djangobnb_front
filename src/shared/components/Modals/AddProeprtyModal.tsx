@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useAddPropertyModal } from "@/processes/store/hooks/usePropertyModal";
 import { CustomButton } from "../Forms";
@@ -13,6 +13,7 @@ import Location from "@/components/AddProperty/Location";
 import ImageSection from "@/components/AddProperty/Image";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProperty } from "@/entities/Properties/api";
+import ErrorMessage from "../ErrorMessage";
 
 const titles = [
     "Choose category",
@@ -31,6 +32,7 @@ const AddProeprtyModal = () => {
     const { isOpen, close } = useAddPropertyModal();
     const [currentStep, setCurrentStep] = useState<number>(1);
     const [dataCategory, setDataCategory] = useState<string>("");
+    const [error, setError] = useState<string>("");
     const [description, setDescription] = useState<DescriptionConfig>({
         title: "",
         description: "",
@@ -83,6 +85,9 @@ const AddProeprtyModal = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["properties"] });
         },
+        onError: (val: string) => {
+            setError(val);
+        },
     });
 
     const submitForm = async () => {
@@ -102,6 +107,10 @@ const AddProeprtyModal = () => {
         mutation.mutate(formData);
         close();
     };
+
+    useEffect(() => {
+        setError("");
+    }, [currentStep]);
 
     return (
         <Modal isOpen={isOpen} close={close} title="Add property">
@@ -140,6 +149,8 @@ const AddProeprtyModal = () => {
                     dataImage={dataImage}
                 />
             )}
+
+            {error && <ErrorMessage>{error}</ErrorMessage>}
 
             <div className="flex gap-2">
                 {currentStep > 1 && (
