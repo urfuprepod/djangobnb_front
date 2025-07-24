@@ -17,6 +17,20 @@ const UserNav = () => {
     const menuLinkConfig = useMemo(() => {
         return [
             {
+                title: 'My properties',
+                showed: !!userId,
+                callback: () => {
+                    router.push('/myproperties')
+                }
+            },
+            {
+                title: 'My reservations',
+                showed: !!userId,
+                callback: () => {
+                    router.push('/myreservations')
+                }
+            },
+            {
                 title: "Log In",
                 showed: !userId,
                 callback: () => {

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import Image from "next/image";
 import { IProperty } from "@/entities/Properties/types";
+import Link from "next/link";
 
 type Props = {
     property: IProperty;
@@ -20,7 +21,10 @@ const PropertyPageInfo: FC<Props> = (props) => {
 
             <hr />
 
-            <div className="py-6 flex items-center space-x-4">
+            <Link
+                href={`/lanlords/${landlord.id}`}
+                className="py-6 flex items-center space-x-4"
+            >
                 {landlord.avatar_url && (
                     <Image
                         src={`${landlord.avatar_url}`}
@@ -34,7 +38,7 @@ const PropertyPageInfo: FC<Props> = (props) => {
                 <p>
                     <strong>{landlord.name}</strong> is your host
                 </p>
-            </div>
+            </Link>
 
             <hr />
             <p className="mt-6 text-lg" id="description">

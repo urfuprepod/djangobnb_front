@@ -2,13 +2,20 @@
 
 import { getProperties } from "@/entities/Properties/api";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { FC } from "react";
 import PropertyListItem from "./PropertyListItem";
 
-const PropertiesList = () => {
+type Props = {
+    landlordId?: string;
+};
+
+const PropertiesList: FC<Props> = (props) => {
+    const { landlordId } = props;
+
     const { data, isLoading } = useQuery({
-        queryKey: ["properties"],
-        queryFn: getProperties,
+        queryKey: ["properties", `l-${landlordId}`],
+        queryFn: () => getProperties(landlordId),
+        staleTime: 0,
     });
 
     if (isLoading) return <p>loading...</p>;
