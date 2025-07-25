@@ -2,17 +2,21 @@
 
 import React, { FC } from "react";
 import { propertyListItemClass } from "./constants";
-import { DetailPageImage } from "@/shared/components";
+import { DetailPageImage, FavoriteButton } from "@/shared/components";
 import { useRouter } from "next/navigation";
 import { IProperty } from "@/entities/Properties/types";
 
 type Props = {
     property: IProperty;
+    markFavorite?: (val: string) => void;
+    is_favorite?: boolean
 };
 
 const PropertyListItem: FC<Props> = (props) => {
     const {
         property: { id, title: name, imageUrl, pricePerNight: price },
+        markFavorite,
+        is_favorite = false,
     } = props;
 
     const router = useRouter();
@@ -28,6 +32,8 @@ const PropertyListItem: FC<Props> = (props) => {
                     alt={name}
                     sizes="{max-width: 768px} 768px, {max-width: 1200px}: 768px, 768px"
                 />
+
+                {markFavorite && <FavoriteButton is_favorite={is_favorite} id={id} />}
             </div>
 
             <div className="mt-2">

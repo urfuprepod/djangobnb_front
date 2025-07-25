@@ -2,13 +2,20 @@ import { BaseInstanse } from "@/processes/axiosInstance";
 import { IProperty } from "../types";
 import { AxiosError } from "axios";
 
-export const getProperties = async (landlordId?: string) => {
+export const getProperties = async (
+    landlordId?: string,
+    isFavorites?: boolean
+) => {
     try {
-        const response = await BaseInstanse.get<{ data: IProperty[] }>(
-            "properties",
-            { params: landlordId ? { landlord_id: landlordId } : {} }
-        );
-        return response.data?.data;
+        const response = await BaseInstanse.get<{
+            data: IProperty[];
+            favorites: string[];
+        }>("properties", {
+            params: landlordId
+                ? { landlord_id: landlordId, is_favorites: !!isFavorites }
+                : {},
+        });
+        return response.data;
     } catch (e) {
         return null;
     }

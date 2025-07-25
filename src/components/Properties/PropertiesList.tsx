@@ -2,27 +2,50 @@
 
 import { getProperties } from "@/entities/Properties/api";
 import { useQuery } from "@tanstack/react-query";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import PropertyListItem from "./PropertyListItem";
 
 type Props = {
     landlordId?: string;
+    favorites?: boolean
 };
 
 const PropertiesList: FC<Props> = (props) => {
-    const { landlordId } = props;
+    const { landlordId, favorites = false } = props;
 
     const { data, isLoading } = useQuery({
         queryKey: ["properties", `l-${landlordId}`],
-        queryFn: () => getProperties(landlordId),
+        queryFn: () => getProperties(landlordId, favorites),
         staleTime: 0,
     });
+
+    const markFavorite = (id: string) => {
+        if (localFavorites.includes(id)) {
+            setLocalFavorites((prev) => prev.filter((el) => el !== id));
+        } else {
+            setLocalFavorites((prev) => prev.concat(id));
+        }
+    };
+
+    const [localFavorites, setLocalFavorites] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!data?.favorites) {
+            return;
+        }
+        setLocalFavorites(localFavorites);
+    }, [data?.favorites]);
 
     if (isLoading) return <p>loading...</p>;
     return (
         <>
-            {data?.map((el) => (
-                <PropertyListItem property={el} key={el.id} />
+            {data?.data?.map((el) => (
+                <PropertyListItem
+                    markFavorite={markFavorite}
+                    is_favorite={localFavorites.includes(el.id)}
+                    property={el}
+                    key={el.id}
+                />
             ))}
         </>
     );

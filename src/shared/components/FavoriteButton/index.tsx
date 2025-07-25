@@ -1,21 +1,22 @@
 import React, { FC } from "react";
 import classNames from "classnames";
 import { Heart } from "lucide-react";
-import { useMakePropertyFavorite } from "@/entities/Properties/hooks";
+
 
 type Props = {
     id: string;
     is_favorite: boolean;
+    markFavorite?: (val: string) => void;
 };
 
 const FavoriteButton: FC<Props> = (props) => {
-    const { id, is_favorite } = props;
+    const { id, is_favorite, markFavorite } = props;
 
-    const {onToggleFavorite} = useMakePropertyFavorite(id)
+    // const {onToggleFavorite} = useMakePropertyFavorite(id)
 
     return (
         <button
-            onClick={onToggleFavorite}
+            onClick={() => markFavorite?.(id)}
             className={classNames(`absolute top-2 right-2 hover:text-airbnb`, {
                 "text-airbnb": is_favorite,
                 "text-white": !is_favorite,

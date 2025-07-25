@@ -24,6 +24,20 @@ const UserNav = () => {
                 }
             },
             {
+                title: 'Inbox',
+                showed: !!userId,
+                callback: () => {
+                    router.push('/inbox')
+                }
+            },
+            {
+                title: 'My favorites',
+                showed: !!userId,
+                callback: () => {
+                    router.push('/myfavorites')
+                }
+            },
+            {
                 title: 'My reservations',
                 showed: !!userId,
                 callback: () => {
