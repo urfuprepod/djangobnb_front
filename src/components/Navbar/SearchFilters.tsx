@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import SearchFilter from "./SearchFilter";
 import Image from "next/image";
 import classNames from "classnames";
 import { NavHeightClass } from "./constants";
+import { useSearchModal } from "@/processes/store/hooks";
 
 const filters = [
     { title: "Where", description: "Wanted location", className: "w-[250px]" },
@@ -12,8 +15,11 @@ const filters = [
 ];
 
 const SearchFilters = () => {
+    const { open } = useSearchModal();
+
     return (
         <div
+            onClick={open}
             className={classNames(
                 NavHeightClass,
                 "flex flex-row items-center justify-between border rounded-full"
@@ -29,7 +35,12 @@ const SearchFilters = () => {
 
             <div className="p-2">
                 <div className="p-2 lg:p-4 cursor-pointer bg-airbnb hover:bg-airbnb transition rounded-full text-white">
-                    <Image alt="search" width={20} height={20} src={"/assets/search.svg"} />
+                    <Image
+                        alt="search"
+                        width={20}
+                        height={20}
+                        src={"/assets/search.svg"}
+                    />
                 </div>
             </div>
         </div>

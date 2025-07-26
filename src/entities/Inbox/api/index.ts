@@ -1,5 +1,5 @@
 import { BaseInstanse } from "@/processes/axiosInstance";
-import { IConversation } from "../types";
+import { IConversation, IMessage } from "../types";
 
 export const getConversations = async (): Promise<IConversation[]> => {
     try {
@@ -9,5 +9,22 @@ export const getConversations = async (): Promise<IConversation[]> => {
         return response.data.data;
     } catch (e) {
         return [];
+    }
+};
+
+export const getConversationById = async (
+    id: string
+): Promise<{
+    conversation: IConversation;
+    message: IMessage[];
+} | null> => {
+    try {
+        const response = await BaseInstanse.get<{
+            conversation: IConversation;
+            message: IMessage[];
+        }>(`chat/${id}`);
+        return response.data;
+    } catch (e) {
+        return null;
     }
 };

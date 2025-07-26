@@ -15,3 +15,12 @@ export enum EnumTokens {
     ACCESS_TOKEN = "session_access_token",
     REFRESH_TOKEN = "session_refresh_token",
 }
+
+export type SearchQuery = {
+    country: string
+    checkIn: null
+    checkOut: null
+    guests: number
+    bedrooms: number
+    category: string
+}
