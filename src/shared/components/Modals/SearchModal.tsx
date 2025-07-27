@@ -8,6 +8,7 @@ import { SearchQuery, SelectCountryType } from "@/shared/types";
 import { LocationScreen } from "./SearchModalScreens";
 import { initialDateRange, steps } from "../../constants";
 import { Range } from "react-date-range";
+import { getProperties } from "@/entities/Properties/api";
 
 const SearchModal = () => {
     const { isOpen, close, step, changeStep, setQuery } = useSearchModal();
@@ -25,16 +26,17 @@ const SearchModal = () => {
     const closeAndSearch = () => {
         close();
 
-
         const newSearchQuery: SearchQuery = {
-            country: country?.label ?? '',
+            country: country?.label ?? "",
             checkIn: dateRange.startDate ?? null,
             checkOut: dateRange.endDate ?? null,
             guests: +guests,
             bedrooms: +bedrooms,
-            category: ''
-        }
-        setQuery(newSearchQuery)
+            category: "",
+        };
+        setQuery(newSearchQuery);
+
+        getProperties(undefined, undefined, newSearchQuery);
     };
 
     useEffect(() => {

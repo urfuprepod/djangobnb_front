@@ -14,8 +14,12 @@ export const getProperties = async (
             favorites: string[];
         }>("properties", {
             params: landlordId
-                ? { landlord_id: landlordId, is_favorites: !!isFavorites }
-                : {},
+                ? {
+                      landlord_id: landlordId,
+                      is_favorites: !!isFavorites,
+                      ...query,
+                  }
+                : { ...query },
             paramsSerializer: (params) => {
                 return qs.stringify(params, {
                     serializeDate: (date: Date) => date.toISOString(), // Даты → ISO

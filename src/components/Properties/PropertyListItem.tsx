@@ -33,7 +33,7 @@ const PropertyListItem: FC<Props> = (props) => {
                     sizes="{max-width: 768px} 768px, {max-width: 1200px}: 768px, 768px"
                 />
 
-                {markFavorite && <FavoriteButton is_favorite={is_favorite} id={id} />}
+                {markFavorite && <FavoriteButton markFavorite={markFavorite} is_favorite={is_favorite} id={id} />}
             </div>
 
             <div className="mt-2">

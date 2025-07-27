@@ -8,18 +8,22 @@ import { useSearchModal } from "@/processes/store/hooks";
 
 type Props = {
     landlordId?: string;
-    favorites?: boolean
+    favorites?: boolean;
 };
 
 const PropertiesList: FC<Props> = (props) => {
     const { landlordId, favorites = false } = props;
-    const {query} = useSearchModal()
+    const { query } = useSearchModal();
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: ["properties", `l-${landlordId}`],
-        queryFn: () => getProperties(landlordId, favorites),
+        queryFn: () => getProperties(landlordId, favorites, query),
         staleTime: 0,
     });
+
+    useEffect(() => {
+        refetch();
+    }, [query]);
 
     const markFavorite = (id: string) => {
         if (localFavorites.includes(id)) {

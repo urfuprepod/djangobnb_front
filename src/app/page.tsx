@@ -1,14 +1,52 @@
+"use client";
+
 import Categories from "@/shared/components/Categories";
 import PropertiesListContainer from "@/components/Properties/PropertiesListContainer";
 import { MainContainer } from "@/shared/components";
-
-const categoriesItems = [
-    { src: "beach", alt: "Category - Beach", title: "Beach" },
-    { src: "wow", alt: "Category - Wow", title: "Wow" },
-    { src: "skis", alt: "Category - Skis", title: "Skis" },
-];
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchModal } from "@/processes/store/hooks";
 
 export default function Home() {
+    const [category, setCategory] = useState("");
+    const { query, setQuery } = useSearchModal();
+
+    const onUpdateCategory = useCallback(
+        (val: string) => {
+            setCategory(val);
+        },
+        [setCategory]
+    );
+
+    useEffect(() => {
+        setQuery({ ...query, category });
+    }, [category]);
+
+    const categoriesItems = useMemo(() => {
+        return [
+            {
+                src: "beach",
+                alt: "Category - Beach",
+                title: "Beach",
+                isActive: "beach" === category,
+                onClick: () => onUpdateCategory("beach"),
+            },
+            {
+                src: "wow",
+                alt: "Category - Wow",
+                title: "Wow",
+                isActive: "wow" === category,
+                onClick: () => onUpdateCategory("wow"),
+            },
+            {
+                src: "skis",
+                alt: "Category - Skis",
+                title: "Skis",
+                isActive: "skis" === category,
+                onClick: () => onUpdateCategory("skis"),
+            },
+        ];
+    }, [onUpdateCategory, category]);
+
     return (
         <MainContainer>
             <Categories categories={categoriesItems} />
