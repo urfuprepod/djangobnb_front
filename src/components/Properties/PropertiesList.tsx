@@ -4,6 +4,7 @@ import { getProperties } from "@/entities/Properties/api";
 import { useQuery } from "@tanstack/react-query";
 import React, { FC, useEffect, useState } from "react";
 import PropertyListItem from "./PropertyListItem";
+import { useSearchModal } from "@/processes/store/hooks";
 
 type Props = {
     landlordId?: string;
@@ -12,6 +13,7 @@ type Props = {
 
 const PropertiesList: FC<Props> = (props) => {
     const { landlordId, favorites = false } = props;
+    const {query} = useSearchModal()
 
     const { data, isLoading } = useQuery({
         queryKey: ["properties", `l-${landlordId}`],

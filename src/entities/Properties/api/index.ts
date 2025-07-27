@@ -1,7 +1,7 @@
 import { BaseInstanse } from "@/processes/axiosInstance";
 import { IProperty } from "../types";
 import { AxiosError } from "axios";
-import qs from 'qs'; 
+import qs from "qs";
 
 export const getProperties = async (
     landlordId?: string,
@@ -20,6 +20,7 @@ export const getProperties = async (
                 return qs.stringify(params, {
                     serializeDate: (date: Date) => date.toISOString(), // Даты → ISO
                     arrayFormat: "brackets", // Массивы → ?counts[]=1&counts[]=2
+                    skipNulls: true, // Игнорировать `null` и `undefined`
                 });
             },
         });
