@@ -12,8 +12,6 @@ type Props = {
 const FavoriteButton: FC<Props> = (props) => {
     const { id, is_favorite, markFavorite } = props;
 
-    // const {onToggleFavorite} = useMakePropertyFavorite(id)
-
     return (
         <button
             onClick={() => markFavorite?.(id)}

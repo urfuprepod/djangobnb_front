@@ -18,8 +18,8 @@ export enum EnumTokens {
 
 export type SearchQuery = {
     country: string
-    checkIn: null
-    checkOut: null
+    checkIn: null | Date
+    checkOut: null | Date
     guests: number
     bedrooms: number
     category: string

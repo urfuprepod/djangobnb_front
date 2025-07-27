@@ -1,10 +1,12 @@
 import { BaseInstanse } from "@/processes/axiosInstance";
 import { IProperty } from "../types";
 import { AxiosError } from "axios";
+import qs from 'qs'; 
 
 export const getProperties = async (
     landlordId?: string,
-    isFavorites?: boolean
+    isFavorites?: boolean,
+    query?: Record<string, any>
 ) => {
     try {
         const response = await BaseInstanse.get<{
@@ -14,6 +16,12 @@ export const getProperties = async (
             params: landlordId
                 ? { landlord_id: landlordId, is_favorites: !!isFavorites }
                 : {},
+            paramsSerializer: (params) => {
+                return qs.stringify(params, {
+                    serializeDate: (date: Date) => date.toISOString(), // Даты → ISO
+                    arrayFormat: "brackets", // Массивы → ?counts[]=1&counts[]=2
+                });
+            },
         });
         return response.data;
     } catch (e) {

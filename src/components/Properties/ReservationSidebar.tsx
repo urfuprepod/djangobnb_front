@@ -12,14 +12,8 @@ import {
     useAddReservation,
     useGetReservations,
 } from "@/entities/Reservations/hooks";
-
-const currentDate = new Date();
-
-const initialDateRange = {
-    startDate: currentDate,
-    endDate: currentDate,
-    key: "selection",
-};
+import { initialDateRange } from "@/shared/constants";
+import { IReservation } from "@/entities/Reservations/types";
 
 type Props = {
     property: IProperty;
@@ -32,7 +26,6 @@ const ReservationSidebar: FC<Props> = ({ property }) => {
 
     const { userId } = useUserData();
     const [dateRange, setDateRange] = useState<Range>(initialDateRange);
-    const [minDate, setMinDate] = useState<Date>(new Date());
     const [guests, setGuests] = useState<string>("1");
 
     const { onAddReservation } = useAddReservation(property.id);

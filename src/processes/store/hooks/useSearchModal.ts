@@ -7,20 +7,26 @@ interface SearchModalStore {
     close: () => void;
     query: SearchQuery;
     setQuery: (query: SearchQuery) => void;
+    step: number;
+    changeStep:(val: number) => void
 }
 
 export const useSearchModal = create<SearchModalStore>((set) => {
     return {
         isOpen: false,
         open() {
-            set({ isOpen: true });
+            set({ isOpen: true, step: 0 });
         },
         close() {
-            set({ isOpen: false });
+            set({ isOpen: false, step: 0 });
         },
         setQuery(query) {
             set({ query });
         },
+        changeStep(val: number) {
+            set({step: val})
+        },
+        step: 0,
         query: {
             category: "",
             checkIn: null,
